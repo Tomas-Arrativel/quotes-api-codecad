@@ -27,6 +27,22 @@ app.get('/api/quotes', (req, res, next) => {
   }
 });
 
+app.post('/api/quotes', (req, res, next) => {
+  const { quote, person } = req.query;
+  if (
+    quote !== undefined &&
+    person !== undefined &&
+    quote.trim() !== '' &&
+    person.trim() !== ''
+  ) {
+    const newQuote = { quote: quote, person: person };
+    quotes.push(newQuote);
+    res.status(201).send({ quote: newQuote });
+  } else {
+    res.status(400).send();
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
